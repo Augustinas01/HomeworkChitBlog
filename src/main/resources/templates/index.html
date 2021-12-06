@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css} "/>
+</head>
+<body class="d-flex flex-column justify-content-between h-100">
+
+<div th:insert="header/header :: mainHeader"></div>
+
+<div th:insert="hero/hero :: mainHero"></div>
+<div th:insert="footer/footer :: mainFooter"></div>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+</body>
+</html>

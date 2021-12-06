@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div th:fragment="mainHeader" >
+    <div sec:authorize="!isAuthenticated()" th:insert="modal/modal :: login"></div>
+    <div sec:authorize="isAuthenticated()" th:insert="modal/modal :: createPost"></div>
+
+    <header class="p-3 border-bottom position-fixed fixed-top bg-body">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <img th:src="@{/bootstrap/img/gem.svg} " alt="Logout" width="35">
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 ">Home</a></li>
+                    <li><a href="blog" class="nav-link px-2 ">Posts</a></li>
+                </ul>
+
+
+                <div sec:authorize="!isAuthenticated()" class="text-end">
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <a href="/signup"><button type="button" class="btn btn-success" >Sign-up</button></a>
+                </div>
+                <div sec:authorize="isAuthenticated()" class="text-end">
+                    <button type="button" class="btn btn-outline-dark me-2" data-bs-toggle="modal" data-bs-target="#postModal">
+                        <img th:src="@{/bootstrap/img/journal-plus.svg} " alt="Logout" width="25">
+                        Post a chit
+                    </button>
+                    <a href="/logout"><img th:src="@{/bootstrap/img/box-arrow-right.svg} " alt="Logout" width="32" height="32"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+</html>

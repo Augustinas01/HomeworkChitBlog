@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:fragment="login" id="loginModal" class="modal modal-signin fade " tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <!-- <h5 class="modal-title">Modal title</h5> -->
+                <h2 class="fw-bold mb-0">Login</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body p-5 pt-0">
+                <form class="" th:action="@{/login}" method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control rounded-4" id="floatingInput" name="username" placeholder="Username">
+                        <label for="floatingInput">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control rounded-4" id="floatingPassword" name="password" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="createPost" class="modal fade" id="postModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Post Creator 3000</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id ="postForm" class="" th:action="@{/post}" th:object="${post}" method="post">
+                    <div class="form-floating mb-3">
+                        <input th:field="*{title}" class="form-control rounded-4" id="postTitle" placeholder="Chit title">
+                        <label for="postTitle">Chit title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input th:field="*{secondTitle}" class="form-control rounded-4" id="postBigTitle" placeholder="Optional second(big) title">
+                        <label for="postBigTitle">Second title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input th:field="*{text}" class="form-control rounded-4" id="postText" placeholder="Chit text">
+                        <label for="postText">Text</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="postForm">Chit!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
