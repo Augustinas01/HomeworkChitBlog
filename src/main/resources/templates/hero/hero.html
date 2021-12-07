@@ -29,13 +29,13 @@
             <p class="col-lg-10 fs-4">Here we talk about all latest trends of Chits about chats. Please fill your details, and you're ready to go!</p>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-light">
+            <form th:action="@{/signup}" th:object="${user}" class="p-4 p-md-5 border rounded-3 bg-light" method="post">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="Username">
+                    <input th:field="*{name}" type="text" class="form-control" id="floatingInput" placeholder="Username">
                     <label for="floatingInput">Username</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input th:field="*{password}" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                     <label for="floatingPassword">Password</label>
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>

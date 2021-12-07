@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<div th:fragment="bigPost">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div th:fragment="bigPost(fragmentPost)">
+
     <div class="container my-5">
 
     <div class="row bg-light col-7 border shadow-sm mx-auto my-3">
@@ -9,48 +10,35 @@
                 <img src="https://via.placeholder.com/100" class="rounded-circle float-start" width="50">
             </div>
             <div class="col-auto me-auto">
-                <div class="row">
-                    Author athorinio
-                </div>
-                <small class="row text-secondary">
-                    posted then and there
-                </small>
+                <div th:text="${fragmentPost.user.name}" class="row"></div>
+                <small th:text="${fragmentPost.createdAt}" class="row text-secondary" ></small>
             </div>
-
-                <div class="col-auto">
-                    deletele
+                <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-auto">deletele
+                    <span sec:authentication="principal.authorities"></span>
                 </div>
 
-
         </div>
-        <div class="row mx-2">
-            Ur veri welkomen to read bout it
-        </div>
+        <div th:text="${fragmentPost.title}" class="row mx-2"></div>
         <div class="row  mx-auto bg-dark px-0">
             <div class="col-auto mx-auto overflow-hidden ">
                 <img src="https://via.placeholder.com/500" class="float-start" >
             </div>
             <div class="row col-12 bg-light mx-0 px-0">
-                <h2 class="text-danger">This big gotcha about that</h2>
+                <h2 th:text="${fragmentPost.secondTitle}" class="text-danger" ></h2>
             </div>
         </div>
         <div class="row d-flex justify-content-between border-bottom mx-auto">
-            <div class="col-auto">
-                420 Likes
-            </div>
-            <div class="col-auto">
-                1337 comments
-            </div>
+            <div class="col-auto">420 Likes</div>
+            <div class="col-auto">1337 comments</div>
         </div>
-        <div  class="row  d-flex justify-content-between  my-2">
+        <div sec:authorize="isAuthenticated()"  class="row  d-flex justify-content-between  my-2">
             <div class="col-auto mx-2">
                 Very like it
             </div>
             <div class="col-auto ">
-                Chit chat bout it
+                Comment
             </div>
         </div>
-
     </div>
 </div>
 </div>

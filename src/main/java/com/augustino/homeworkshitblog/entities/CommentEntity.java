@@ -1,5 +1,6 @@
 package com.augustino.homeworkshitblog.entities;
 
+
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,34 +11,25 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
-@Entity
 @Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostEntity {
+public class CommentEntity {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char") @Column(length = 36)
     private UUID id;
 
-    @CreationTimestamp
-    private Date createdAt;
-
     @ManyToOne
     private UserEntity user;
 
-    private Long likes;
-
-    private String title;
-
-    private String secondTitle;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     private String text;
-
-
-
 }

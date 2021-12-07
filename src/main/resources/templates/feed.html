@@ -8,11 +8,10 @@
 <body>
 <div th:insert="header/header :: mainHeader"></div>
 <div class="container pt-5">
-    <div th:insert="post/post :: bigPost"></div>
-    <div th:insert="post/post :: bigPost"></div>
-    <div th:insert="post/post :: bigPost"></div>
-    <div th:insert="post/post :: bigPost"></div>
-    <div th:insert="post/post :: bigPost"></div>
+
+    <div th:each="iteratedPost: ${allPosts}" th:object="${iteratedPost}">
+        <div th:insert="post/post :: bigPost(fragmentPost = ${iteratedPost})"></div>
+    </div>
 
 </div>
 <div th:insert="footer/footer :: mainFooter"></div>
