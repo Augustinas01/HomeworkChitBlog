@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <div th:fragment="bigPost(fragmentPost)">
+    <div class=" d-flex container my-5 justify-content-center">
 
-    <div class="container my-5">
-
-    <div class="row bg-light col-7 border shadow-sm mx-auto my-3">
-        <div class="row my-1">
-            <div class="col-auto">
-                <img src="https://via.placeholder.com/100" class="rounded-circle float-start" width="50">
-            </div>
-            <div class="col-auto me-auto">
-                <div th:text="${fragmentPost.user.name}" class="row"></div>
-                <small th:text="${fragmentPost.createdAt}" class="row text-secondary" ></small>
-            </div>
-                <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-auto">deletele
-                    <span sec:authentication="principal.authorities"></span>
+        <div class="flex-fill position-relative">
+            <div class="col-auto end-0 position-absolute">
+                <div class="row d-flex flex-nowrap border py-2 pe-3 rounded-pill shadow bg-light">
+                <div class="col-auto d-flex align-items-center">
+                    <img src="https://via.placeholder.com/100" class="rounded-circle float-start" width="50">
                 </div>
+                <div class="col-auto text-nowrap">
+                    <div th:text="${fragmentPost.user.name}" class="row"></div>
+                    <small th:text="${#dates.format(fragmentPost.createdAt, 'dd-M, hh:mm')}" class="row text-secondary" ></small>
+                </div>
+                </div>
+                <div class="row d-flex justify-content-end mt-3">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="bg-light border shadow rounded-circle col-auto p-2">
+                        <a href="/" class="p-0">
+                            <img th:src="@{/bootstrap/img/pencil.svg} " alt="Delete post" width="20" class="m-2">
+                        </a>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end mt-3">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="bg-light border shadow rounded-circle col-auto p-2">
+                        <a href="/" class="p-0">
+                            <img th:src="@{/bootstrap/img/trash.svg} " alt="Delete post" width="20" class="m-2">
+                        </a>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-end mt-3">
+                    <div sec:authorize="isAuthenticated()" class="bg-light border shadow rounded-circle col-auto p-2">
+                        <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row bg-light col-8 border shadow-sm mx-4 ">
+            <div th:text="${fragmentPost.title}" class="row mx-2"></div>
+            <div class="row  mx-auto bg-dark px-0">
+                <div class="col-auto mx-auto overflow-hidden ">
+                    <img src="https://via.placeholder.com/500" class="float-start" >
+                </div>
+                <div class="row col-12 bg-light mx-0 px-0">
+                    <h2 th:text="${fragmentPost.secondTitle}" class="text-danger" ></h2>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-between border-bottom mx-auto">
+                <div class="col-auto">420 Likes</div>
+                <div class="col-auto">1337 comments</div>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 
-        </div>
-        <div th:text="${fragmentPost.title}" class="row mx-2"></div>
-        <div class="row  mx-auto bg-dark px-0">
-            <div class="col-auto mx-auto overflow-hidden ">
-                <img src="https://via.placeholder.com/500" class="float-start" >
+                    Button with data-bs-target
+                </button>
+<!--                <div th:insert=":: commentSection"></div>-->
             </div>
-            <div class="row col-12 bg-light mx-0 px-0">
-                <h2 th:text="${fragmentPost.secondTitle}" class="text-danger" ></h2>
-            </div>
-        </div>
-        <div class="row d-flex justify-content-between border-bottom mx-auto">
-            <div class="col-auto">420 Likes</div>
-            <div class="col-auto">1337 comments</div>
-        </div>
-        <div sec:authorize="isAuthenticated()"  class="row  d-flex justify-content-between  my-2">
-            <div class="col-auto mx-2">
-                Very like it
-            </div>
-            <div class="col-auto ">
-                Comment
+            <div sec:authorize="isAuthenticated()"  class="row  d-flex justify-content-between  my-2">
+                <div class="col-auto mx-2">
+                    Very like it
+                </div>
+                <div class="col-auto ">
+                    Comment
+                </div>
             </div>
         </div>
+
+        <div class="flex-fill position-relative">
+            <div class="collapse collapse-horizontal position-absolute" id="collapseExample">
+                <div class="card card-body" style="width: 420px;">
+                    Some placeholder content for the collapse component.
+                    This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-</div>
+
 </html>

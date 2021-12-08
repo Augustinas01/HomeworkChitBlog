@@ -1,5 +1,7 @@
 package com.augustino.homeworkshitblog.service;
 
+import com.augustino.homeworkshitblog.entities.Authority;
+import com.augustino.homeworkshitblog.entities.Role;
 import com.augustino.homeworkshitblog.entities.UserEntity;
 import com.augustino.homeworkshitblog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,9 +56,18 @@ public class UserDetailsService implements org.springframework.security.core.use
 //                        .collect(Collectors.toList());
 
 //                return List.of( new SimpleGrantedAuthority("ROLE_ADMIN"));
-
                 System.out.println("SUVEIKEEEEEEE");
-                return u.getRoles();
+
+
+//                List<Authority> result;
+
+//                u.getRoles().forEach(result::addAll);
+
+                return u.getRoles().get(0).getAuthorities();
+//                .stream()
+//                        .map(Role::getAuthorities)
+//                        .flatMap(Collection::stream)
+//                        .collect(Collectors.toList());
             }
 
             @Override

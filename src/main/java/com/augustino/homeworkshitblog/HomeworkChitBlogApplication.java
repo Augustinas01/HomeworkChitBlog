@@ -1,8 +1,10 @@
 package com.augustino.homeworkshitblog;
 
+import com.augustino.homeworkshitblog.entities.Authority;
 import com.augustino.homeworkshitblog.entities.PostEntity;
 import com.augustino.homeworkshitblog.entities.Role;
 import com.augustino.homeworkshitblog.entities.UserEntity;
+import com.augustino.homeworkshitblog.repository.AuthorityRepository;
 import com.augustino.homeworkshitblog.repository.PostRepository;
 import com.augustino.homeworkshitblog.repository.UserRepository;
 import com.augustino.homeworkshitblog.repository.RoleRepository;
@@ -28,12 +30,17 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    AuthorityRepository authorityRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(HomeworkChitBlogApplication.class, args);
     }
 
     @Override
     public void run(String... args) {
+
+        createAuthorities();
 
         createRoles();
 
@@ -46,13 +53,38 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     }
 
 
+    private void createAuthorities(){
+        Authority create = Authority.builder().name("CREATE").build();
+        Authority read = Authority.builder().name("READ").build();
+        Authority update = Authority.builder().name("UPDATE").build();
+        Authority delete = Authority.builder().name("DELETE").build();
+        Authority comment = Authority.builder().name("COMMENT").build();
+
+
+
+        authorityRepository.save(create);
+        authorityRepository.save(read);
+        authorityRepository.save(update);
+        authorityRepository.save(delete);
+        authorityRepository.save(comment);
+        authorityRepository.flush();
+    }
 
     private void createRoles(){
 
-        Role mainRole = Role.builder().name("ROLE_ADMIN").build();
-        Role userRole = Role.builder().name("ROLE_USER").build();
+        Role adminRole = Role.builder()
+                .name("ROLE_ADMIN")
+                .authorities(authorityRepository.findAll())
+                .build();
 
-        roleRepository.save(mainRole);
+        Role userRole = Role.builder()
+                .name("ROLE_USER")
+                .authorities(List.of(authorityRepository.findByName("COMMENT"),
+                                     authorityRepository.findByName("UPDATE"),
+                                     authorityRepository.findByName("DELETE")))
+                .build();
+
+        roleRepository.save(adminRole);
         roleRepository.save(userRole);
         roleRepository.flush();
 
@@ -66,6 +98,7 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
                 .password(encoder.encode("test"))
                 .roles(List.of(roleRepository.findByName("ROLE_ADMIN")))
                 .build();
+
         userRepository.saveAndFlush(mainAcc);
 
     }
@@ -77,19 +110,21 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
                 .secondTitle("TIKRAI TESTINIS")
                 .text("Lorem Ipsum bla bla bla")
                 .likes(0L)
-                .user(userRepository.findById(1L).get())
+                .user(userRepository.getById(1L))
                 .build();
-        postRepository.save(postEntity);
+
 
         PostEntity postEntity2 = PostEntity.builder()
                 .title("testinis2")
                 .secondTitle("TIKRAI TESTINIS2")
                 .text("Lorem Ipsum bla bla bla2")
                 .likes(0L)
-                .user(userRepository.findById(1L).get())
+                .user(userRepository.getById(1L))
                 .build();
 
+        postRepository.save(postEntity);
         postRepository.save(postEntity2);
+
         postRepository.flush();
 
 

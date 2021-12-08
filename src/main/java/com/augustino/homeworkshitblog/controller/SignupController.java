@@ -3,6 +3,7 @@ package com.augustino.homeworkshitblog.controller;
 import com.augustino.homeworkshitblog.entities.UserEntity;
 import com.augustino.homeworkshitblog.repository.UserRepository;
 import com.augustino.homeworkshitblog.repository.RoleRepository;
+import com.augustino.homeworkshitblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +22,7 @@ import java.util.Set;
 public class SignupController {
 
     @Autowired
-    UserRepository accountRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
+    UserService userService;
 
 
 
@@ -32,27 +30,18 @@ public class SignupController {
     public String get(Model model){
 
         model.addAttribute("user", new UserEntity());
+
         return "signup";
     }
 
     @PostMapping
     public String post(@ModelAttribute UserEntity user){
 
-        createUser(user.getName(), user.getPassword());
+        userService.createUser(user);
         return "redirect:/index";
     }
 
 
 
-    private void createUser(String name, String password){
 
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-
-        UserEntity user = UserEntity.builder()
-                .name(name)
-                .password(encoder.encode(password))
-                .roles(List.of(roleRepository.findByName("ROLE_USER")))
-                .build();
-        accountRepository.saveAndFlush(user);
-    }
 }

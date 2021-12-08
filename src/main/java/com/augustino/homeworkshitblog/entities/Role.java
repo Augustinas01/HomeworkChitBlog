@@ -13,20 +13,25 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role implements GrantedAuthority {
+public class Role  {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Collection<UserEntity> users;
+    @ManyToMany(mappedBy = "roles")
+    private Collection<UserEntity> users;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles_authorities",
+            joinColumns = @JoinColumn(name = "role_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id",
+                    referencedColumnName = "id"))
+    private Collection<Authority> authorities;
 
 
-    @Override
-    public String getAuthority() {
-        return "ROLE_ADMIN";
-    }
+
 }
