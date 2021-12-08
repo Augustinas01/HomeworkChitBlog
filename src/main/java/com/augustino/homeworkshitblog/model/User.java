@@ -1,11 +1,13 @@
 package com.augustino.homeworkshitblog.model;
 
+import com.augustino.homeworkshitblog.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
+
 
 @Data
 @Builder
@@ -13,7 +15,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
 
+    private Long id;
     private String username;
     private String password;
-    private Set<String> roles;
+    private List<Role> roles;
 }

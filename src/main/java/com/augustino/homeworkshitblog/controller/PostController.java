@@ -22,7 +22,9 @@ public class PostController {
 
         postService.createPost(post);
 
-        return "redirect:/blog";
+        return post.getImage().toString();
+//        System.out.println(post.getImage());
+//        return "redirect:/blog";
     }
 
 }

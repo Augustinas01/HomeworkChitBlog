@@ -2,6 +2,7 @@ package com.augustino.homeworkshitblog.service;
 
 
 import com.augustino.homeworkshitblog.entities.UserEntity;
+import com.augustino.homeworkshitblog.model.User;
 import com.augustino.homeworkshitblog.repository.RoleRepository;
 import com.augustino.homeworkshitblog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +21,26 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
-    private final UserDetailsService userDetailsService;
+//    private final UserDetailsService userDetailsService;
 
 
-    public UserEntity getUserByName(String username){
-         if(accountRepository.findByName(username).isPresent()) {
-             return accountRepository.findByName(username).get();
-         }else{
-             throw new UsernameNotFoundException(username);
-         }
+    public User getUserByName(String username){
+
+        UserEntity userEntity = accountRepository.findByName(username)
+                                                 .orElseThrow(() -> new UsernameNotFoundException(username));
+
+             return User.builder()
+                     .id(userEntity.getId())
+                     .username(userEntity.getName())
+                     .password(userEntity.getPassword())
+                     .roles(userEntity.getRoles())
+                     .build();
+
     }
 
-    public UserEntity getLoggedIn(){
-        return getUserByName(userDetailsService.getCurrentlyLoggedIn().getUsername());
-    }
+//    public User getLoggedIn(){
+//        return getUserByName(userDetailsService.getCurrentlyLoggedIn().getUsername());
+//    }
 
 
     public void createUser(UserEntity user){

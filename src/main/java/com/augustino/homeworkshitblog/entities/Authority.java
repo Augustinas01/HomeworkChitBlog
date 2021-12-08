@@ -23,8 +23,8 @@ public class Authority implements GrantedAuthority {
 
     private String name;
 
-    @ManyToMany(mappedBy = "authorities")
-    private Collection<Role> roles;
+//    @ManyToMany(mappedBy = "authorities")
+//    private Collection<Role> roles;
 
     @Override
     public String getAuthority() {

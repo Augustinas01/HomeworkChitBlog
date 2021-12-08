@@ -9,7 +9,7 @@
 <div th:insert="header/header :: mainHeader"></div>
 <div class="container pt-5">
 
-    <div th:each="iteratedPost: ${allPosts}" th:object="${iteratedPost}">
+    <div th:each="iteratedPost: ${allPosts}" >
         <div th:insert="post/post :: bigPost(fragmentPost = ${iteratedPost})"></div>
     </div>
 
