@@ -31,8 +31,7 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     @Autowired
     CommentRepository commentRepository;
 
-    @Value("${createfromscratch}")
-    private Boolean createfromscratch;
+
 
     public static void main(String[] args) {
         SpringApplication.run(HomeworkChitBlogApplication.class, args);
@@ -42,18 +41,13 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     public void run(String... args) {
 
 
-        if(createfromscratch){
 
-            createAuthorities();
-            createRoles();
-            createUsers();
-            createPosts();
-            createComments();
-        }
+//            createAuthorities();
+//            createRoles();
+//            createUsers();
+//            createPosts();
+//            createComments();
 
-
-
-//        System.out.println(accountRepository.findByName("mainAcc"));
     }
 
 

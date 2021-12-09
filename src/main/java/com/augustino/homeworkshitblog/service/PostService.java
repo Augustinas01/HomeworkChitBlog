@@ -52,6 +52,8 @@ public class PostService {
         PostEntity postEntity = PostEntity.builder()
                 .text(post.getText())
                 .imageName(post.getImageFileName())
+                .isDeleted(false)
+                .likes(0L)
                 .user(userRepository.findByName(auth.getName()).get())
                 .build();
 
