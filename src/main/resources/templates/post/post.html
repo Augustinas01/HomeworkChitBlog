@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-auto text-nowrap">
                     <div th:text="${fragmentPost.user.name}" class="row"></div>
-                    <small th:text="${#dates.format(fragmentPost.createdAt, 'dd-M, hh:mm')}" class="row text-secondary" ></small>
+                    <small th:text="${#dates.format(fragmentPost.createdAt, 'hh:mm, dd-M')}" class="row text-secondary" ></small>
                 </div>
                 </div>
                 <div class="row d-flex justify-content-end mt-3">
@@ -30,61 +30,65 @@
                             <img th:src="@{/bootstrap/img/chat-right-text.svg} " alt="Post likes count" width="20" class="m-2">
                         </div>
                         <div class="col-auto my-auto mx-3 text-nowrap">
-                            <div th:text="${fragmentPost.likes}" class="row"></div>
+                            <div th:text="${fragmentPost.commentList.size()}" class="row"></div>
                         </div>
                     </div>
                 </div>
                 <div sec:authorize="hasAuthority('UPDATE')" class="row d-flex justify-content-end mt-3">
                     <div  class="bg-light border shadow rounded-circle col-auto p-2">
-                        <a href="/" class="p-0">
+                        <a class="p-0" data-bs-toggle="modal" data-bs-target="#editModal" th:data-bs-postText="${fragmentPost.text}" th:data-bs-postID="${fragmentPost.id}" >
                             <img th:src="@{/bootstrap/img/pencil.svg} " alt="Delete post" width="20" class="m-2">
                         </a>
                     </div>
                 </div>
                 <div sec:authorize="hasAuthority('DELETE')" class="row d-flex justify-content-end mt-3">
                     <div  class="bg-light border shadow rounded-circle col-auto p-2">
-                        <a href="/" class="p-0">
-                            <img th:src="@{/bootstrap/img/trash.svg} " alt="Delete post" width="20" class="m-2">
-                        </a>
+                        <form th:action="@{/post/delete}" method="post" class="p-0">
+                            <input th:value="${fragmentPost.id}" type="hidden" name="postID">
+                            <button class="btn btn-link p-0" type="submit">
+                                <img th:src="@{/bootstrap/img/trash.svg} " alt="Delete post" width="20" class="m-2">
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row bg-light col-8 border shadow-sm mx-4 ">
-            <div th:text="${fragmentPost.title}" class="row mx-2"></div>
-            <div class="row  mx-auto bg-dark px-0">
-                <div class="col-auto mx-auto overflow-hidden ">
-                    <img src="https://via.placeholder.com/500" class="float-start" >
+        <div class="row col-8 mx-4 ">
+            <div th:text="${fragmentPost.text}" class="row mx-auto  border border-2 p-2"></div>
+            <div class="row  mx-auto bg-dark shadow-sm px-0">
+                <div class="col-auto mx-auto overflow-hidden d-flex " style="min-height: 400px">
+                    <img th:src="@{'/uploads/' + ${fragmentPost.imageFileName}}" class="align-self-center" style="max-width: 100%;" >
                 </div>
             </div>
-            <div class="row d-flex justify-content-around my-2">
-                <button class="col-4 btn btn-outline-dark" type="button">
-                    Like
-                </button>
-                <button class="col-4 btn btn-outline-dark" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <div  class="row d-flex justify-content-between px-0 mx-auto my-2">
+                <form th:action="@{/post/like}" method="post" class="col-5 p-0">
+                    <input th:value="${fragmentPost.id}" type="hidden" name="postID">
+                    <button th:classappend="${#authentication.getName() == 'anonymousUser'? 'disabled' : '' }" class="col-12 btn btn-outline-dark text-primary" type="submit">
+                        Like
+                    </button>
+                </form>
+                <button  class="col-5 btn btn-outline-dark" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="'#id' + ${fragmentPost.id}" aria-expanded="false" th:aria-controls="'id' + ${fragmentPost.id}">
                     Comment
                 </button>
             </div>
         </div>
 
         <div class="flex-fill position-relative">
-            <div class="collapse collapse-horizontal border position-absolute" id="collapseExample" style="height: 100%;">
+            <div class="collapse collapse-horizontal border position-absolute" th:id="'id' + ${fragmentPost.id}" style="height: 100%;">
                 <div class="container d-flex flex-column justify-content-end" style="width: 420px;height: 100%;">
-                    <div class="border my-2 p-2">
-                        Some placeholder content for the collapse component.
-                        This panel is hidden by default but revealed when the user activates the relevant trigger.
+
+                    <div th:each="comment: ${fragmentPost.commentList}" >
+                        <div th:text="${comment.text}" class="border my-2 p-2"></div>
                     </div>
-                    <div class="border my-2 p-2">
-                        Some placeholder content for the collapse component.
-                        This panel is hidden by default but revealed when the user activates the relevant trigger.
-                    </div>
-                    <form sec:authorize="hasAuthority('COMMENT')" class="d-flex mb-1">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <form sec:authorize="hasAuthority('COMMENT')" th:action="@{/post/comment}" th:object="${comment}" method="post" class="d-flex mb-1">
+                        <textarea th:field="*{text}" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="max-height: 200PX;"></textarea>
+                        <input th:value="${fragmentPost.id}" type="hidden" name="postID">
+                        <input th:value="${fragmentPost.user.id}" type="hidden" name="userID" >
                         <div class="border ms-1 d-flex">
-                            <a href="/" class="p-0 d-flex">
+                            <button type="submit" class="p-0 d-flex btn btn-outline">
                                 <img th:src="@{/bootstrap/img/send.svg} " alt="Comment" width="20" class="m-2 my-auto">
-                            </a>
+                            </button>
                         </div>
                     </form>
                 </div>

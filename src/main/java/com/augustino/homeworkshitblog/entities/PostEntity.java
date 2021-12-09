@@ -32,12 +32,10 @@ public class PostEntity {
 
     private Long likes;
 
-    private String title;
-
-    private String secondTitle;
-
     private String text;
 
+    private String imageName;
 
+    private Boolean isDeleted;
 
 }

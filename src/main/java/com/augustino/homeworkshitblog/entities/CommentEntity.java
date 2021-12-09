@@ -27,6 +27,9 @@ public class CommentEntity {
     @ManyToOne
     private UserEntity user;
 
+    @ManyToOne
+    private PostEntity post;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

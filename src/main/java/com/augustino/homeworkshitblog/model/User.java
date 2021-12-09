@@ -1,6 +1,7 @@
 package com.augustino.homeworkshitblog.model;
 
 import com.augustino.homeworkshitblog.entities.Role;
+import com.augustino.homeworkshitblog.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,17 @@ import java.util.List;
 public class User {
 
     private Long id;
-    private String username;
+    private String name;
     private String password;
     private List<Role> roles;
+
+
+    public static User map(UserEntity userEntity){
+        return User.builder()
+                .id(userEntity.getId())
+                .name(userEntity.getName())
+                .password(userEntity.getPassword())
+                .roles(userEntity.getRoles())
+                .build();
+    }
 }

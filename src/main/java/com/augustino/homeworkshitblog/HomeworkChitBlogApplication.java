@@ -1,13 +1,7 @@
 package com.augustino.homeworkshitblog;
 
-import com.augustino.homeworkshitblog.entities.Authority;
-import com.augustino.homeworkshitblog.entities.PostEntity;
-import com.augustino.homeworkshitblog.entities.Role;
-import com.augustino.homeworkshitblog.entities.UserEntity;
-import com.augustino.homeworkshitblog.repository.AuthorityRepository;
-import com.augustino.homeworkshitblog.repository.PostRepository;
-import com.augustino.homeworkshitblog.repository.UserRepository;
-import com.augustino.homeworkshitblog.repository.RoleRepository;
+import com.augustino.homeworkshitblog.entities.*;
+import com.augustino.homeworkshitblog.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,6 +27,9 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     @Autowired
     AuthorityRepository authorityRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(HomeworkChitBlogApplication.class, args);
     }
@@ -47,6 +44,8 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
         createUsers();
 
         createPosts();
+
+        createComments();
 
 
 //        System.out.println(accountRepository.findByName("mainAcc"));
@@ -106,20 +105,20 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     private void createPosts(){
 
         PostEntity postEntity = PostEntity.builder()
-                .title("testinis")
-                .secondTitle("TIKRAI TESTINIS")
                 .text("Lorem Ipsum bla bla bla")
-                .likes(0L)
+                .likes(4L)
+                .imageName("e4676912-d6c0-4b05-8f0f-2efad25cee22test3.jpg")
                 .user(userRepository.getById(1L))
+                .isDeleted(false)
                 .build();
 
 
         PostEntity postEntity2 = PostEntity.builder()
-                .title("testinis2")
-                .secondTitle("TIKRAI TESTINIS2")
-                .text("Lorem Ipsum bla bla bla2")
-                .likes(0L)
+                .text("Upsum Lorum")
+                .likes(2L)
+                .imageName("b9e31e6f-5ada-4a4b-9b7c-bbe1e94505f6test2.jpeg")
                 .user(userRepository.getById(1L))
+                .isDeleted(false)
                 .build();
 
         postRepository.save(postEntity);
@@ -130,5 +129,17 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
 
     }
 
+
+    private void createComments(){
+
+        CommentEntity commentEntity = CommentEntity.builder()
+                .user(userRepository.getById(1L))
+                .post(postRepository.findAll().get(0))
+                .text("test test test")
+                .build();
+
+        commentRepository.saveAndFlush(commentEntity);
+
+    }
 
 }

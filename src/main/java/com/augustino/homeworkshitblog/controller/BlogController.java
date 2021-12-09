@@ -1,5 +1,6 @@
 package com.augustino.homeworkshitblog.controller;
 
+import com.augustino.homeworkshitblog.model.Comment;
 import com.augustino.homeworkshitblog.model.Post;
 import com.augustino.homeworkshitblog.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,10 @@ public class BlogController {
 
     @GetMapping("blog")
     public String getPage(Model model) {
-
         model.addAttribute("postCreation", new Post());
+        model.addAttribute("comment",new Comment());
         model.addAttribute("allPosts", postService.getAllPostsList());
+//        model.addAttribute("commentList", )
         return "feed";
     }
 

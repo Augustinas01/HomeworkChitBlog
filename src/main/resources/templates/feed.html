@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css} "/>
 </head>
 <body>
+<div sec:authorize="isAuthenticated()" th:insert="modal/modal :: editPost"></div>
 <div th:insert="header/header :: mainHeader"></div>
 <div class="container pt-5">
 
@@ -16,5 +17,23 @@
 </div>
 <div th:insert="footer/footer :: mainFooter"></div>
 <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<script>
+    var exampleModal = document.getElementById('editModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-postText')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        var modalTitle = exampleModal.querySelector('.modal-title')
+        var modalBodyInput = exampleModal.querySelector('.modal-body textarea')
+
+        modalTitle.textContent = 'New message to ' + recipient
+        modalBodyInput.value = recipient
+    })
+</script>
 </body>
 </html>

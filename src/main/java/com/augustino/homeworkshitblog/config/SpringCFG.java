@@ -28,7 +28,7 @@ public class SpringCFG extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/signup","/bootstrap/**","/post","/blog").permitAll()
+                .antMatchers("/", "/signup","/bootstrap/**","/uploads/**","/post","/blog").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -45,8 +45,8 @@ public class SpringCFG extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws
-            Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth
                 .userDetailsService(userDetailsService)

@@ -31,7 +31,7 @@ public class UserService {
 
              return User.builder()
                      .id(userEntity.getId())
-                     .username(userEntity.getName())
+                     .name(userEntity.getName())
                      .password(userEntity.getPassword())
                      .roles(userEntity.getRoles())
                      .build();
