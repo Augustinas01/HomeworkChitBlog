@@ -21,9 +21,6 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
-//    private final UserDetailsService userDetailsService;
-
-
     public User getUserByName(String username){
 
         UserEntity userEntity = accountRepository.findByName(username)

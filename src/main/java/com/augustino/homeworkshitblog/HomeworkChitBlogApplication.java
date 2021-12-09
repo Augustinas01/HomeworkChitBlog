@@ -3,6 +3,7 @@ package com.augustino.homeworkshitblog;
 import com.augustino.homeworkshitblog.entities.*;
 import com.augustino.homeworkshitblog.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +31,9 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     @Autowired
     CommentRepository commentRepository;
 
+    @Value("${createfromscratch}")
+    private Boolean createfromscratch;
+
     public static void main(String[] args) {
         SpringApplication.run(HomeworkChitBlogApplication.class, args);
     }
@@ -37,15 +41,16 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        createAuthorities();
 
-        createRoles();
+        if(createfromscratch){
 
-        createUsers();
+            createAuthorities();
+            createRoles();
+            createUsers();
+            createPosts();
+            createComments();
+        }
 
-        createPosts();
-
-        createComments();
 
 
 //        System.out.println(accountRepository.findByName("mainAcc"));
