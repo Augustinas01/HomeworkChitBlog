@@ -125,6 +125,12 @@ public class PostService {
         postRepository.saveAndFlush(postEntity);
     }
 
+    public void editPost(UUID postID, String text){
+        PostEntity postEntity = postRepository.getById(postID);
+        postEntity.setText(text);
+        postRepository.saveAndFlush(postEntity);
+    }
+
 
 //    public List<CommentEntity> getAllPostCommentListByPostID(UUID postID) {
 //        commentRepository.getCommentEntitiesByPostId(postID);

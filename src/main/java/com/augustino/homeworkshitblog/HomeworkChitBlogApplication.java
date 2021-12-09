@@ -79,8 +79,7 @@ public class HomeworkChitBlogApplication implements CommandLineRunner {
         Role userRole = Role.builder()
                 .name("ROLE_USER")
                 .authorities(List.of(authorityRepository.findByName("COMMENT"),
-                                     authorityRepository.findByName("UPDATE"),
-                                     authorityRepository.findByName("DELETE")))
+                                     authorityRepository.findByName("UPDATE")))
                 .build();
 
         roleRepository.save(adminRole);

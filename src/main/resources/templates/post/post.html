@@ -36,9 +36,9 @@
                 </div>
                 <div sec:authorize="hasAuthority('UPDATE')" class="row d-flex justify-content-end mt-3">
                     <div  class="bg-light border shadow rounded-circle col-auto p-2">
-                        <a class="p-0" data-bs-toggle="modal" data-bs-target="#editModal" th:data-bs-postText="${fragmentPost.text}" th:data-bs-postID="${fragmentPost.id}" >
+                        <button class="p-0 border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#editModal" th:data-bs-postText="${fragmentPost.text}" th:data-bs-postID="${fragmentPost.id}" >
                             <img th:src="@{/bootstrap/img/pencil.svg} " alt="Delete post" width="20" class="m-2">
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div sec:authorize="hasAuthority('DELETE')" class="row d-flex justify-content-end mt-3">

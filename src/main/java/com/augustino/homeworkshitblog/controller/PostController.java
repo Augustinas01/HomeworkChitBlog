@@ -64,10 +64,19 @@ public class PostController {
         return "redirect:/blog";
     }
 
-    @PostMapping("edit")
-    public String editPost(@RequestParam("text") UUID uuid){
+//    @PostMapping("edit")
+//    public String editPost(@RequestParam("postID") UUID uuid,
+//                           @RequestParam("postText") String text){
+//
+//        postService.editPost(uuid, text);
+//
+//        return "redirect:/blog";
+//    }
 
-        postService.deletePost(uuid);
+    @PostMapping("edit")
+    public String editPost(@ModelAttribute Post post){
+
+        postService.editPost(post.getId(), post.getText());
 
         return "redirect:/blog";
     }

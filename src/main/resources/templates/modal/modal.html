@@ -61,9 +61,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id ="editForm" class="" th:action="@{/post/edit}" method="post" enctype="multipart/form-data">
+                <form id ="editForm" class="" th:object="${postCreation}" th:action="@{/post/edit}" method="post">
+                    <input th:field="*{id}" id="postoID" type="hidden">
                     <div class="form-floating mb-3">
-                        <textarea name="text" class="form-control rounded-4" ></textarea>
+                        <textarea th:field="*{text}" name="text" class="form-control rounded-4" ></textarea>
                         <label for="postTitle">Chit text</label>
                     </div>
                 </form>
